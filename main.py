@@ -19,15 +19,18 @@ class Bank:
     def __update():  #private
        with open(Bank.database,'w') as fs:
           fs.write(json.dumps(Bank.data))  #json.dumps takes a Python object and converts it into a JSON string
-
+           
     @classmethod   #class level function
     def __generateaccno(cls):  #private
-       alphabets = random.choices(string.ascii_letters,k=3)   #gives 3 random alphabets as lsit
-       nums = random.choices(string.digits,k=3)   #gives 3 random strings as list
-       spchar = random.choices("!@#$%^&*",k=1)  # gives random special character as list
-       id = alphabets + nums + spchar
-       random.shuffle(id)  #shuffles the id list
-       return "".join(id)   #joining the elements of id to a single string 
+       while (True): #running until finds a unique account number
+          alphabets = random.choices(string.ascii_letters,k=3)   #gives 3 random alphabets as lsit
+          nums = random.choices(string.digits,k=3)   #gives 3 random strings as list
+          spchar = random.choices("!@#$%^&*",k=1)  # gives random special character as list
+          id = alphabets + nums + spchar
+          random.shuffle(id)  #shuffles the id list
+          accno =  "".join(id)   #joining the elements of id to a single string 
+          if all(accno!= i ['accountno'] for i in cls.data): #check for unique account numbers
+             return accno 
          
     def createaccount(self):
         info = {
@@ -183,4 +186,5 @@ if check == 5:
    user.updatedetails()
 if check == 6:
    user.deleteaccount()   
+
 
